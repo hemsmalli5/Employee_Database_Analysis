@@ -1,63 +1,11 @@
--- Creating Employee Data Base tables 
-
-CREATE TABLE departments (
-	dept_no VARCHAR(4) NOT NULL,
-	dept_name VARCHAR(40) NOT NULL,
-	PRIMARY KEY (dept_no),
-	UNIQUE (dept_name)
-);
-
-CREATE TABLE employees (
-	emp_no INT NOT NULL,
-	birth_date DATE NOT NULL,
-	first_name VARCHAR NOT NULL,
-	last_name VARCHAR NOT NULL,
-	gender VARCHAR NOT NULL,
-	hire_date DATE NOT NULL,
-	PRIMARY KEY (emp_no)
-);
-
-CREATE TABLE dept_manager(
-	dept_no VARCHAR(4) NOT NULL,
-	emp_no INT NOT NULL,
-	from_date DATE NOT NULL,
-	to_date DATE NOT NULL,
-	FOREIGN KEY (emp_no) REFERENCES employees (emp_no),
-	FOREIGN KEY (dept_no) REFERENCES departments (dept_no),
-	PRIMARY KEY (emp_no, dept_no)
-);
-
-CREATE TABLE dept_emp(
-	emp_no INT NOT NULL,
-	dept_no VARCHAR(4) NOT NULL,
-	from_date DATE NOT NULL,
-	to_date DATE NOT NULL,
-	FOREIGN KEY (emp_no) REFERENCES employees (emp_no),
-	FOREIGN KEY (dept_no) REFERENCES departments (dept_no),
-	PRIMARY KEY (emp_no, dept_no)
-);
-
-CREATE TABLE titles (
-	emp_no INT NOT NULL,
-	title VARCHAR(50) NOT NULL,
-	from_date DATE NOT NULL,
-	to_date DATE NOT NULL,
-	FOREIGN KEY (emp_no) REFERENCES employees (emp_no),
-	PRIMARY KEY (emp_no, title, from_date)
-);
-
-CREATE TABLE salaries (
-	emp_no INT NOT NULL,
-	salary INT NOT NULL,
-	from_date DATE NOT NULL,
-	to_date DATE NOT NULL,
-	FOREIGN KEY (emp_no) REFERENCES employees (emp_no),
-	PRIMARY KEY (emp_no, from_date)
-);
-
-SELECT * FROM departments;
-SELECT * FROM employees;
-SELECT * FROM dept_emp;
-SELECT * FROM dept_manager;
-SELECT * FROM salaries;
-SELECT * FROM titles;
+-- Relational Employee Data Base tables (departments, employees, dept_manager, dept_emp, titles, and salaries) provide sufficient information required to perform the analysis. 
+1. As a step 1, create all the above mentione tables into the data base and import data accordingly.
+2. Join the tables accordingly to gather final output of how many employees will be retiring, their titles, and the employees' eligible for metorship program
+	2a.Find Retirement info table to hold all retirement eligibility
+	2b. Join 'departments' and 'dept_manager' tables
+	2c. Create 'current_emp' tables from the 'retirmenet_info' and merged departments by performing left joint 
+	2d. Get the employees count by department number, employee list with salary and gender, list of sales and developments
+3. Perform inner join for 'current_emp' & 'titles' to create 'ret_title' table with the number of job titles retiening
+4. With advance ROW_NUMBER function, create 'unique_title' table that provides employees' recent job titles.
+5. Count the employee titles and create 'retiring_titles' 
+6. From 'emplyees', 'dept_emp', and 'titles', filter the employees eligible for potential mentorship programs.
